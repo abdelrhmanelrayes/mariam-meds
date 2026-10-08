@@ -1,0 +1,273 @@
+<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}[hidden]{display:none!important}</style>
+<title>أسبوع علاج مريم</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=Reem+Kufi:wght@500;700&display=swap">
+<style>
+/* Layout: one narrow column, phone-first. Day strip on top, the day's dose timeline as the main body, reference sections below. */
+:root{
+  --bg:#f6f4f7; --surface:#ffffff; --ink:#221b26; --muted:#665d6b; --line:#e2dce6;
+  --accent:#6b3f7a; --accent-soft:#efe5f3; --oral:#2f6b4f; --oral-soft:#e2f0e8;
+  --in:#a3422f; --in-soft:#fbe7e2; --out:#2f5a99; --out-soft:#e4ecf8;
+  --warn:#b42318; --warn-soft:#fdecea; --med-soft:#f8f0dd; --med:#8a5a00;
+  --f-display:"Reem Kufi","IBM Plex Sans Arabic",Tahoma,sans-serif;
+  --f-body:"IBM Plex Sans Arabic",Tahoma,"Segoe UI",sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#151118; --surface:#1e1922; --ink:#ece6ef; --muted:#a79dad; --line:#332b38;
+  --accent:#c79ad8; --accent-soft:#35243d; --oral:#7fcfa5; --oral-soft:#1d3329;
+  --in:#f29a85; --in-soft:#3d221c; --out:#93b6ef; --out-soft:#1f2a40;
+  --warn:#ff8a7a; --warn-soft:#3d1f1b; --med-soft:#3a2d17; --med:#f0b45a; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#151118; --surface:#1e1922; --ink:#ece6ef; --muted:#a79dad; --line:#332b38;
+  --accent:#c79ad8; --accent-soft:#35243d; --oral:#7fcfa5; --oral-soft:#1d3329;
+  --in:#f29a85; --in-soft:#3d221c; --out:#93b6ef; --out-soft:#1f2a40;
+  --warn:#ff8a7a; --warn-soft:#3d1f1b; --med-soft:#3a2d17; --med:#f0b45a; color-scheme:dark}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.65}
+.wrap{max-width:720px;margin:0 auto;padding-inline:16px;padding-block:20px 48px;display:flex;flex-direction:column;gap:22px}
+h1{font-family:var(--f-display);font-weight:700;font-size:1.75rem;margin:0;line-height:1.3;text-wrap:balance}
+h2{font-family:var(--f-display);font-weight:500;font-size:1.2rem;margin:0 0 10px;text-wrap:balance}
+.sub{color:var(--muted);margin:4px 0 0}
+.rules{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.rule{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:.88rem;min-width:0}
+.rule b{display:block;color:var(--accent);font-size:.95rem}
+@media (max-width:520px){.rules{grid-template-columns:1fr}}
+.days{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;scrollbar-width:thin}
+.day{flex:0 0 auto;min-width:76px;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:10px;padding:8px 10px;font:inherit;cursor:pointer;text-align:center;line-height:1.3}
+.day small{display:block;color:var(--muted);font-size:.75rem;font-variant-numeric:tabular-nums}
+.day .n{font-weight:600}
+.day[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--surface)}
+.day[aria-pressed="true"] small{color:var(--surface);opacity:.85}
+.day:focus-visible,.chk:focus-visible+span,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.dayhead{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:6px 12px}
+.progress{font-size:.85rem;color:var(--muted);font-variant-numeric:tabular-nums}
+.bar{height:6px;background:var(--line);border-radius:99px;overflow:hidden;margin-top:8px}
+.bar i{display:block;height:100%;background:var(--accent);width:0}
+.slot{margin:14px 0 6px;font-weight:600;color:var(--muted);font-size:.9rem;display:flex;gap:8px;align-items:baseline}
+.slot .time{direction:ltr;font-variant-numeric:tabular-nums}
+.timeline{list-style:none;margin:0;padding:0;background:var(--surface);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.item{display:grid;grid-template-columns:1fr auto;gap:10px;padding:12px 14px;border-top:1px solid var(--line);align-items:center}
+.item:first-child{border-top:0}
+.what{min-width:0}
+.what b{font-weight:600;direction:ltr;unicode-bidi:isolate}
+.what p{margin:2px 0 0;color:var(--muted);font-size:.88rem}
+.tag{font-size:.72rem;padding:1px 8px;border-radius:99px;margin-inline-start:6px;vertical-align:middle;font-weight:600}
+.t-oral{background:var(--oral-soft);color:var(--oral)}
+.t-in{background:var(--in-soft);color:var(--in)}
+.t-out{background:var(--out-soft);color:var(--out)}
+.item.done .what b{text-decoration:line-through;color:var(--muted)}
+label.box{position:relative;display:inline-flex;cursor:pointer}
+.chk{position:absolute;opacity:0;width:28px;height:28px;margin:0}
+.chk+span{width:28px;height:28px;border:2px solid var(--line);border-radius:8px;display:inline-grid;place-items:center;background:var(--surface)}
+.chk:checked+span{background:var(--accent);border-color:var(--accent)}
+.chk:checked+span::after{content:"";width:11px;height:6px;border-inline-start:2px solid var(--surface);border-bottom:2px solid var(--surface);transform:rotate(-45deg) translate(1px,-1px)}
+.log{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+@media (max-width:520px){.log{grid-template-columns:1fr 1fr}}
+.log label{display:flex;flex-direction:column;gap:4px;font-size:.88rem;color:var(--muted);min-width:0}
+.log input,.log textarea,.log select{font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:8px 10px;font-variant-numeric:tabular-nums;min-width:0}
+.log .full{grid-column:1/-1}
+.log textarea{min-height:56px;resize:vertical}
+.section{display:flex;flex-direction:column;gap:10px}
+.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+@media (max-width:560px){.cards{grid-template-columns:1fr}}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px;min-width:0}
+.card h3{margin:0;font-size:1rem;font-weight:600;direction:ltr;text-align:right;unicode-bidi:isolate}
+.card .dose{font-size:.84rem;color:var(--accent);font-weight:600}
+.card p{margin:4px 0 0;color:var(--muted);font-size:.88rem}
+.how{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px}
+.how ol{margin:0;padding-inline-start:22px}
+.how li{margin:4px 0}
+.med{background:var(--med-soft);border-radius:12px;padding:14px}
+.med h2{color:var(--med)}
+.med ul,.warn ul{margin:6px 0 0;padding-inline-start:20px}
+.med li,.warn li{margin:3px 0}
+.warn{background:var(--warn-soft);border-radius:12px;padding:14px}
+.warn h2{color:var(--warn)}
+.week{overflow-x:auto;background:var(--surface);border:1px solid var(--line);border-radius:12px}
+.week table{border-collapse:collapse;width:100%;font-size:.88rem;font-variant-numeric:tabular-nums}
+.week th,.week td{padding:8px 10px;border-top:1px solid var(--line);text-align:center;white-space:nowrap}
+.week thead th{border-top:0;color:var(--muted);font-weight:500}
+.foot{color:var(--muted);font-size:.8rem}
+@media (prefers-reduced-motion:no-preference){.day,.chk+span,.bar i{transition:all .15s}}
+</style>
+
+</head><body>
+<div class="wrap" dir="rtl" lang="ar">
+  <header>
+    <h1>أسبوع علاج مريم</h1>
+    <p class="sub">روشتة الجراحة: شرخ شرجي مزمن + بواسير · من الخميس ٨ أكتوبر للأربع ١٤ أكتوبر ٢٠٢٦</p>
+  </header>
+
+  <div class="rules">
+    <div class="rule"><b>الأقراص بعد الأكل</b>Diosmin وDimra وEucarbon دايماً على معدة مليانة.</div>
+    <div class="rule"><b>الدهان بعد الحمام</b>تنضيف بالمية وتنشيف بالتربيت، وبعدين G.T.N الأول.</div>
+    <div class="rule"><b>مفيش أدوية تانية للشرج</b>Faktu وSediproct وDoxiproct وQuadriderm متوقفين لحد ما الجراح يأكد.</div>
+  </div>
+
+  <nav class="days" id="days" aria-label="أيام الأسبوع"></nav>
+
+  <section>
+    <div class="dayhead">
+      <h2 id="dayTitle" style="margin:0"></h2>
+      <span class="progress" id="progress"></span>
+    </div>
+    <div class="bar" aria-hidden="true"><i id="barFill"></i></div>
+    <div id="timeline"></div>
+  </section>
+
+  <section class="section">
+    <h2>تسجيل اليوم</h2>
+    <div class="log">
+      <label>الحكة من ٠ لـ ١٠<input id="itch" type="number" min="0" max="10" inputmode="numeric" placeholder="مثلاً ٥"></label>
+      <label>الألم من ٠ لـ ١٠<input id="pain" type="number" min="0" max="10" inputmode="numeric" placeholder="مثلاً ٣"></label>
+      <label>صداع من G.T.N؟<select id="head"><option value="">–</option><option value="لا">لا</option><option value="خفيف">خفيف</option><option value="شديد">شديد</option></select></label>
+      <label class="full">ملاحظة<textarea id="note" placeholder="كريم معين عمل حرقان؟ دخلتي الحمام كام مرة؟"></textarea></label>
+    </div>
+  </section>
+
+  <section class="how">
+    <h2>طريقة الدهان</h2>
+    <ol>
+      <li>بعد دخول الحمام: نضّفي بالمية بس، من غير صابون ومن غير مناديل مبلولة.</li>
+      <li>نشّفي بالتربيت، أو بالسشوار على هوا بارد.</li>
+      <li><b>G.T.N</b> بكمية صغيرة داخل الشرج زي رسمة الدكتور، بجوانتي أو كيس إصبع، واغسلي إيدك بعدها.</li>
+      <li>استني ١٠–١٥ دقيقة، وبعدين <b>Anicrepto</b> و<b>Anivas</b> طبقة رفيعة حول الشرج.</li>
+      <li>لو دخلتي الحمام في وقت تاني: نضّفي وحطي الكريمات الخارجية تاني.</li>
+    </ol>
+  </section>
+
+  <section class="section">
+    <h2>الأدوية</h2>
+    <div class="cards" id="cards"></div>
+  </section>
+
+  <section class="med">
+    <h2>تنبيهات</h2>
+    <ul>
+      <li><b>G.T.N</b> بيعمل صداع أو دوخة أول أيام، وده متوقع وبيخف. بنادول للصداع مسموح. اقعدي أو نامي شوية بعد الدهان لو حسيتي بدوخة.</li>
+      <li><b>Dimra</b> بديل Myofen اللي في الروشتة، مادته مختلفة (ديكلوفيناك + ميثوكاربامول). أكدي الجرعة مع الصيدلي، وممكن يعمل نعاس.</li>
+      <li>لو كريم معين عمل <b>حرقان أو زوّد الحكة</b>، وقفيه وكلمي الجراح. أول واحد يتشك فيه Anivas.</li>
+      <li>مية كتير وألياف، ومن غير زحير في الحمام.</li>
+    </ul>
+  </section>
+
+  <section class="section">
+    <h2>الأسبوع كله</h2>
+    <div class="week"><table><thead><tr><th>اليوم</th><th>الجرعات</th><th>الحكة</th><th>الألم</th><th>صداع</th></tr></thead><tbody id="weekBody"></tbody></table></div>
+  </section>
+
+  <section class="warn">
+    <h2>كلّمي الدكتور فوراً لو</h2>
+    <ul>
+      <li>نزيف كتير أو مستمر مع الحمام.</li>
+      <li>سخونية، أو ورم وألم شديد بيزيد حوالين الشرج.</li>
+      <li>صداع شديد مابيخفش أو دوخة لحد الإغماء بعد G.T.N.</li>
+      <li>طفح أو حرقان شديد بعد أي كريم.</li>
+    </ul>
+    <p style="margin:8px 0 0">الجرعات من قراءة روشتة بخط اليد. لو الصيدلي أو الدكتور قال غير كده، كلامهم هو اللي يتمشي عليه.</p>
+  </section>
+
+  <p class="foot" id="syncState" aria-live="polite">العلامات بتتحفظ على الموبايل ده. افتحي الصفحة دايماً من نفس الموبايل ونفس المتصفح.</p>
+</div>
+
+<script>
+(function(){
+  const MEDS={
+    dio:{n:"Diosmin Plus",d:"قرص · صبح وليل بعد الأكل",p:"للبواسير: بيقوّي جدار الأوردة ويقلل الورم. بديل Dafrex اللي في الروشتة، نفس المادة.",t:"oral"},
+    dim:{n:"Dimra",d:"قرص · صبح وليل بعد الأكل",p:"مسكن ومرخي عضلات. بعد الأكل دايماً. ممكن يعمل نعاس.",t:"oral"},
+    euc:{n:"Eucarbon",d:"قرص · ٣ مرات بعد الأكل",p:"للانتفاخ والهضم وتنظيم البراز.",t:"oral"},
+    gtn:{n:"G.T.N",d:"مرهم · داخل الشرج · صبح وليل",p:"أهم علاج للشرخ: بيرخّي عضلة الشرج فالشرخ يلتئم. كمية صغيرة.",t:"in"},
+    crm:{n:"Anicrepto + Anivas",d:"كريم · حول الشرج · ٣ مرات",p:"لتهدئة المنطقة والالتئام. بعد G.T.N بـ ١٠–١٥ دقيقة.",t:"out"}
+  };
+  const SLOTS=[
+    {h:"09:00",l:"الصبح · بعد الفطار",items:["dio","dim","euc","gtn","crm"]},
+    {h:"15:00",l:"الضهر · بعد الغدا",items:["euc","crm"]},
+    {h:"21:00",l:"بالليل · بعد العشا",items:["dio","dim","euc","gtn","crm"]}
+  ];
+  const TAG={oral:["بالفم","t-oral"],in:["داخلي","t-in"],out:["خارجي","t-out"]};
+  const DAYS=[
+    {d:"الخميس",dt:"٨ أكتوبر"},{d:"الجمعة",dt:"٩ أكتوبر"},{d:"السبت",dt:"١٠ أكتوبر"},
+    {d:"الأحد",dt:"١١ أكتوبر"},{d:"الاتنين",dt:"١٢ أكتوبر"},{d:"التلات",dt:"١٣ أكتوبر"},{d:"الأربع",dt:"١٤ أكتوبر"}
+  ];
+  const ISO=["2026-10-08","2026-10-09","2026-10-10","2026-10-11","2026-10-12","2026-10-13","2026-10-14"];
+  const TOTAL=SLOTS.reduce((a,s)=>a+s.items.length,0);
+  const ar=n=>String(n).replace(/\d/g,d=>"٠١٢٣٤٥٦٧٨٩"[d]);
+  const fmt=h=>{let [H,M]=h.split(":").map(Number);const ap=H<12?"AM":"PM";H=H%12||12;return H+":"+String(M).padStart(2,"0")+" "+ap;};
+
+  const KEY="mariam-meds-v1";
+  let store={};
+  try{store=JSON.parse(localStorage.getItem(KEY)||"{}")||{};}catch(e){store={};}
+  const blank=()=>({c:{},itch:"",pain:"",head:"",note:""});
+  let cur=0;
+  const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(store));}catch(e){}};
+  const now=new Date(), today=now.getFullYear()+"-"+String(now.getMonth()+1).padStart(2,"0")+"-"+String(now.getDate()).padStart(2,"0");
+  const ti=ISO.indexOf(today); if(ti>=0) cur=ti;
+
+  const daysEl=document.getElementById("days");
+  DAYS.forEach((d,k)=>{
+    const b=document.createElement("button");
+    b.className="day"; b.type="button"; b.id="day-"+k;
+    b.innerHTML='<span class="n">'+d.d+'</span><small>'+d.dt+'</small><small id="dc-'+k+'"></small>';
+    b.onclick=()=>{cur=k;render();};
+    daysEl.appendChild(b);
+  });
+
+  function count(s){return Object.values(s.c||{}).filter(Boolean).length;}
+  function render(){
+    const day=DAYS[cur], s=store[cur]||(store[cur]=blank());
+    [...daysEl.children].forEach((b,k)=>b.setAttribute("aria-pressed",k===cur));
+    document.getElementById("dayTitle").textContent="اليوم "+ar(cur+1)+" · "+day.d+" "+day.dt;
+    const tl=document.getElementById("timeline"); tl.innerHTML="";
+    SLOTS.forEach((sl,si)=>{
+      const h=document.createElement("div"); h.className="slot";
+      h.innerHTML='<span>'+sl.l+'</span><span class="time">'+fmt(sl.h)+'</span>';
+      tl.appendChild(h);
+      const ol=document.createElement("ol"); ol.className="timeline";
+      sl.items.forEach(k=>{
+        const m=MEDS[k], key=si+"-"+k, id="c-"+cur+"-"+key, on=!!s.c[key];
+        const li=document.createElement("li"); li.className="item"+(on?" done":"");
+        li.innerHTML='<div class="what"><b>'+m.n+'</b><span class="tag '+TAG[m.t][1]+'">'+TAG[m.t][0]+'</span><p>'+m.d.split(" · ").slice(0,2).join(" · ")+'</p></div>'+
+          '<label class="box" for="'+id+'"><input class="chk" type="checkbox" id="'+id+'" aria-label="تم: '+m.n+' '+sl.l+'"'+(on?" checked":"")+'><span></span></label>';
+        li.querySelector("input").onchange=e=>{s.c[key]=e.target.checked;li.classList.toggle("done",e.target.checked);save();prog(s);week();};
+        ol.appendChild(li);
+      });
+      tl.appendChild(ol);
+    });
+    prog(s);
+    const it=document.getElementById("itch"),pn=document.getElementById("pain"),hd=document.getElementById("head"),nt=document.getElementById("note");
+    it.value=s.itch; pn.value=s.pain; hd.value=s.head||""; nt.value=s.note;
+    it.oninput=()=>{s.itch=it.value;save();week();};
+    pn.oninput=()=>{s.pain=pn.value;save();week();};
+    hd.onchange=()=>{s.head=hd.value;save();week();};
+    nt.oninput=()=>{s.note=nt.value;save();};
+    week();
+  }
+  function prog(s){
+    const n=count(s);
+    document.getElementById("progress").textContent=ar(n)+" من "+ar(TOTAL)+" جرعة";
+    document.getElementById("barFill").style.width=(n/TOTAL*100)+"%";
+  }
+  function week(){
+    const tb=document.getElementById("weekBody"); tb.innerHTML="";
+    DAYS.forEach((d,k)=>{
+      const s=store[k]||blank(), n=count(s);
+      const dc=document.getElementById("dc-"+k); if(dc) dc.textContent=ar(n)+"/"+ar(TOTAL);
+      const v=x=>x!==undefined&&x!==""?ar(x):"–";
+      const tr=document.createElement("tr");
+      tr.innerHTML="<th>"+d.d+"</th><td>"+ar(n)+" / "+ar(TOTAL)+"</td><td>"+v(s.itch)+"</td><td>"+v(s.pain)+"</td><td>"+(s.head||"–")+"</td>";
+      tb.appendChild(tr);
+    });
+  }
+
+  const cards=document.getElementById("cards");
+  Object.values(MEDS).forEach(m=>{
+    const c=document.createElement("div"); c.className="card";
+    c.innerHTML='<h3>'+m.n+'<span class="tag '+TAG[m.t][1]+'">'+TAG[m.t][0]+'</span></h3><div class="dose">'+m.d+'</div><p>'+m.p+'</p>';
+    cards.appendChild(c);
+  });
+
+  render();
+
+})();
+</script>
+
+</body></html>
