@@ -98,7 +98,7 @@ label.box{position:relative;display:inline-flex;cursor:pointer}
   </header>
 
   <div class="rules">
-    <div class="rule"><b>الأقراص بعد الأكل</b>Diosmin وDimra وEucarbon دايماً على معدة مليانة.</div>
+    <div class="rule"><b>الأقراص بعد الأكل</b>Diosmin وDimra الصبح وبالليل، وEucarbon بالليل بس بعد العشا.</div>
     <div class="rule"><b>الدهان بعد الحمام</b>تنضيف بالمية وتنشيف بالتربيت، وبعدين G.T.N الأول.</div>
     <div class="rule"><b>مفيش أدوية تانية للشرج</b>Faktu وSediproct وDoxiproct وQuadriderm متوقفين لحد ما الجراح يأكد.</div>
   </div>
@@ -174,13 +174,13 @@ label.box{position:relative;display:inline-flex;cursor:pointer}
   const MEDS={
     dio:{n:"Diosmin Plus",d:"قرص · صبح وليل بعد الأكل",p:"للبواسير: بيقوّي جدار الأوردة ويقلل الورم. بديل Dafrex اللي في الروشتة، نفس المادة.",t:"oral"},
     dim:{n:"Dimra",d:"قرص · صبح وليل بعد الأكل",p:"مسكن ومرخي عضلات. بعد الأكل دايماً. ممكن يعمل نعاس.",t:"oral"},
-    euc:{n:"Eucarbon",d:"قرص · ٣ مرات بعد الأكل",p:"للانتفاخ والهضم وتنظيم البراز.",t:"oral"},
+    euc:{n:"Eucarbon",d:"قرص · مرة بالليل بعد العشا",p:"للانتفاخ والهضم وتنظيم البراز.",t:"oral"},
     gtn:{n:"G.T.N",d:"مرهم · داخل الشرج · صبح وليل",p:"أهم علاج للشرخ: بيرخّي عضلة الشرج فالشرخ يلتئم. كمية صغيرة.",t:"in"},
     crm:{n:"Anicrepto + Anivas",d:"كريم · حول الشرج · ٣ مرات",p:"لتهدئة المنطقة والالتئام. بعد G.T.N بـ ١٠–١٥ دقيقة.",t:"out"}
   };
   const SLOTS=[
-    {h:"09:00",l:"الصبح · بعد الفطار",items:["dio","dim","euc","gtn","crm"]},
-    {h:"15:00",l:"الضهر · بعد الغدا",items:["euc","crm"]},
+    {h:"09:00",l:"الصبح · بعد الفطار",items:["dio","dim","gtn","crm"]},
+    {h:"15:00",l:"الضهر · بعد الغدا",items:["crm"]},
     {h:"21:00",l:"بالليل · بعد العشا",items:["dio","dim","euc","gtn","crm"]}
   ];
   const TAG={oral:["بالفم","t-oral"],in:["داخلي","t-in"],out:["خارجي","t-out"]};
@@ -211,7 +211,7 @@ label.box{position:relative;display:inline-flex;cursor:pointer}
     daysEl.appendChild(b);
   });
 
-  function count(s){return Object.values(s.c||{}).filter(Boolean).length;}
+  function count(s){let n=0;SLOTS.forEach((sl,si)=>sl.items.forEach(k=>{if((s.c||{})[si+"-"+k])n++;}));return n;}
   function render(){
     const day=DAYS[cur], s=store[cur]||(store[cur]=blank());
     [...daysEl.children].forEach((b,k)=>b.setAttribute("aria-pressed",k===cur));
